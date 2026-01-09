@@ -55,9 +55,11 @@ def request(method, url, **kwargs):
     # By using the 'with' statement we are sure the session is closed, thus we
     # avoid leaving sockets open which can trigger a ResourceWarning in some
     # cases, and look like a memory leak in others.
+    # its make use a seesion like open browser no more no less
+    # and then req that url and the nreturn the respone or whatever
     with sessions.Session() as session:
         return session.request(method=method, url=url, **kwargs)
-
+    
 
 def get(url, params=None, **kwargs):
     r"""Sends a GET request.
@@ -69,7 +71,7 @@ def get(url, params=None, **kwargs):
     :return: :class:`Response <Response>` object
     :rtype: requests.Response
     """
-
+    # for better visualization no more
     return request("get", url, params=params, **kwargs)
 
 
@@ -81,6 +83,7 @@ def options(url, **kwargs):
     :return: :class:`Response <Response>` object
     :rtype: requests.Response
     """
+    # same
 
     return request("options", url, **kwargs)
 
@@ -95,6 +98,10 @@ def head(url, **kwargs):
     :return: :class:`Response <Response>` object
     :rtype: requests.Response
     """
+    # with allow_redirects=False u can see 
+    # HEAD https://short.url/abc
+    #  │  └── redirects to → https://actual-site.com/real-page
+    #so u can see info of first page and know where it is directs u
 
     kwargs.setdefault("allow_redirects", False)
     return request("head", url, **kwargs)
